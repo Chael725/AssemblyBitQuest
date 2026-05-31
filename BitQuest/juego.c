@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "juego.h"
+#include "ventana.h"
 
 void imprimir_ventana(char mapa[FIL][COL +1], int jugadorFila, int jugadorColumna){
     //Calcular el inicio de la vista para centrar al jugador
@@ -24,9 +25,31 @@ void imprimir_ventana(char mapa[FIL][COL +1], int jugadorFila, int jugadorColumn
 
     //Imprimir la ventana 20x20
     for (int i = 0; i < VIEW; i++) {
+        gotoxy(3, 3 + i);
         for (int j = 0; j < VIEW; j++) {
-            printf("%c", mapa[filInicio + i][colInicio + j]);
+            if (mapa[filInicio + i][colInicio + j] == '.') {
+                setColor(2);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if (mapa[filInicio + i][colInicio + j] == '#') {
+                setColor(8);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if (mapa[filInicio + i][colInicio + j] == 'P') {
+                setColor(11);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if (mapa[filInicio + i][colInicio + j] == 'M') {
+                setColor(14);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if (mapa[filInicio + i][colInicio + j] == 'K') {
+                setColor(6);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if (mapa[filInicio + i][colInicio + j] == '&') {
+                setColor(4);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else {
+                setColor(7);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }
         }
-        printf("\n");
+        fflush(stdout);
     }
 }
