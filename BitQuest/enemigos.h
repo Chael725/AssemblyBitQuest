@@ -28,6 +28,11 @@ void mover_enemigos(char mapa[FIL][COL + 1], int *playing, int jugadorFila, int 
                 else if (direccion == 2) nC--;
                 else if (direccion == 3) nC++;
 
+                if (mapa[nF][nC] == '.') {
+                    mapa[i][j] = '.';   
+                    mapa[nF][nC] = '&'; 
+                                        
+                }
             }
         }
     }
