@@ -21,8 +21,6 @@ void imprimir_ventana(char mapa[FIL][COL +1], int jugadorFila, int jugadorColumn
         colInicio = COL - VIEW;
     }
 
-    //Limpiar la consola
-    printf("\033[H\033[J"); 
 
     //Imprimir la ventana 20x20
     for (int i = 0; i < VIEW; i++) {

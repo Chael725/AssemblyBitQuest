@@ -4,10 +4,12 @@
 #include <conio.h> 
 #include <ctype.h>
 #include "mapas.h"
+#include "ventana.h"
+
 
 int main() {
+    ocultarCursor();
     system("chcp 437 > nul");
-    system("cls");
 
     //Posicion donde comenzara el jugador
     int jugadorFila = 1;
@@ -18,6 +20,7 @@ int main() {
 
     //Ciclo principal
     while (playing){
+        reset();
         //Dibujar la vista de 20x20 del laberinto
         imprimir_ventana(mapa1, jugadorFila, jugadorColumna);
     
@@ -50,3 +53,4 @@ int main() {
 
     return 0;
 }
+
