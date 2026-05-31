@@ -1,13 +1,18 @@
 #include "juego.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <conio.h> 
 #include <ctype.h>
 #include "mapas.h"
 #include "ventana.h"
+#include "monedas.h"
 
 
 int main() {
+    bool llave = false;
+    colocar(mapa1);
+    colocar_llave(mapa1);
     ocultarCursor();
     system("chcp 437 > nul");
 
@@ -35,8 +40,24 @@ int main() {
         else if (input == 'D') nuevaColumna++;
         else if (input == 'Q') playing = 0;
 
+
         //Validar la colision con las paredes
-        if (playing && mapa1[nuevaFila][nuevaColumna] != '#'){
+        if (llave && playing && mapa1[nuevaFila][nuevaColumna] == 'D'){
+            mapa1[jugadorFila][jugadorColumna] = '.';
+        
+            jugadorFila = nuevaFila;
+            jugadorColumna = nuevaColumna;
+            
+            mapa1[jugadorFila][jugadorColumna] = 'P';
+            playing = 0;
+        }else if (playing && mapa1[nuevaFila][nuevaColumna] == 'K'){
+            llave = true;
+            mapa1[jugadorFila][jugadorColumna] = '.';
+            jugadorFila = nuevaFila;
+            jugadorColumna = nuevaColumna;
+            mapa1[jugadorFila][jugadorColumna] = 'P';
+            
+        }else if (playing && mapa1[nuevaFila][nuevaColumna] != '#' && mapa1[nuevaFila][nuevaColumna] != 'D') {
 
             mapa1[jugadorFila][jugadorColumna] = '.';
             

@@ -15,3 +15,18 @@ void reset() {
     COORD posicion = {0, 0};
     SetConsoleCursorPosition(hConsole, posicion);
 }
+
+void gotoxy(int x, int y){
+    HANDLE hCon;
+    hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD dwPos;
+    dwPos.X = x;
+    dwPos.Y = y;
+    SetConsoleCursorPosition(hCon,dwPos);
+}
+
+void setColor(int color) {
+    HANDLE pintura;
+    pintura = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(pintura, color);
+}

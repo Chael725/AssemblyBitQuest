@@ -3,7 +3,7 @@
 
 #define FIL 60
 #define COL 60
-#define VIEW 20
+#define VIEW 60
 
 //Prototipo de la funcion para el area visible
 void imprimir_ventana(char mapa[FIL][COL +1], int jugadoFila, int jugadorColumna);
