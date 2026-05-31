@@ -2,7 +2,7 @@
 #include <time.h>
 #include "juego.h"
 
-void colocar(char mapa[FIL][COL + 1]) {
+void colocar_monedas(char mapa[FIL][COL + 1]) {
     srand(time(NULL));
 
     for (int i = 0; i < FIL; i++) {

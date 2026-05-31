@@ -6,12 +6,12 @@
 #include <ctype.h>
 #include "mapas.h"
 #include "ventana.h"
-#include "monedas.h"
+#include "monedasLlave.h"
 
 
 int main() {
     bool llave = false;
-    colocar(mapa1);
+    colocar_monedas(mapa1);
     colocar_llave(mapa1);
     ocultarCursor();
     system("chcp 437 > nul");
