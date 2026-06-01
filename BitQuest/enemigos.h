@@ -28,13 +28,29 @@ void mover_enemigos(char mapa[FIL][COL + 1], int *playing, int jugadorFila, int 
                 else if (direccion == 2) nC--;
                 else if (direccion == 3) nC++;
 
+                // Se que todavía no comento todo, pero esta parte es importante y el porque del cambio.
                 if (mapa[nF][nC] == '.') {
                     mapa[i][j] = '.';   
-                    mapa[nF][nC] = '&'; 
+                    mapa[nF][nC] = 'E'; // Podras ver que aquí he puesto una E, que realmente puede ser cualquier caracter que no se use en el juego.
+                    // Yo note que los enemigos se movian raro, aveces doble, entonces investigando un poco...
+                    // Se puede notar que pues se sigue recorriendo la matrizpara buscar a los demas enemigos.
+                    // Entonces, si el & se movio a la derecha o abajo, al seguir escaneando la matriz,
+                    // Se va volver a topar con el & y por eso se vuelve a mover, con muchamala suerte, estopuede pasar infinitamente,
+                    // Por eso se pone la E, para que cuando siga escaneando, no mueva 2 vecesel mismo enemigo.
                                         
                 }
             }
         }
     }
 
+    // Pero, no lo podemos dejar como E, así que después de mover a todos los enemigos, volvemos a escanear la matriz para cambiar las E por &.
+    // Es muy poco eficiente, pero no tengo el conocimiento de como optimizar esto.
+    // A este punto cada función escanea la matriz...
+    for (int i = 0; i < FIL; i++) {
+        for (int j = 0; j < COL; j++) {
+            if (mapa[i][j] == 'E') {
+                mapa[i][j] = '&';
+            }
+        }
+    }
 }

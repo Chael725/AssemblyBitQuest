@@ -45,6 +45,24 @@ void imprimir_ventana(char mapa[FIL][COL +1], int jugadorFila, int jugadorColumn
             }else if (mapa[filInicio + i][colInicio + j] == '&') {
                 setColor(4);
                 printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if(mapa[filInicio + i][colInicio + j] == 'D' ) {
+                setColor(13);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+
+            }else if(mapa[filInicio + i][colInicio + j] == '-' || mapa[filInicio + i][colInicio + j] == '|') {
+                setColor(12);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+
+            }else if(mapa[filInicio + i][colInicio + j] == 'I' || mapa[filInicio + i][colInicio + j] == 'O' ) {
+                setColor(6);
+                printf("O", mapa[filInicio + i][colInicio + j]);
+
+            }else if(mapa[filInicio + i][colInicio + j] == '*' ) {
+                setColor(4);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if(mapa[filInicio + i][colInicio + j] == '+' ) {
+                setColor(4);
+                printf("%c", mapa[filInicio + i][colInicio + j]);
             }else {
                 setColor(7);
                 printf("%c", mapa[filInicio + i][colInicio + j]);

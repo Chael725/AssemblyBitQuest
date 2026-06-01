@@ -30,9 +30,9 @@ void colocar_llave(char mapa[FIL][COL + 1]) {
     srand(time(NULL));
 
 
-    for (int i = 0; i < 2;) {
-        int filaAleatoria = rand() % FIL + 20;
-        int colAleatoria = rand() % COL + 15;
+    for (int i = 0; i < 1;) {
+        int filaAleatoria = 20 + (rand() % (FIL - 20)); 
+        int colAleatoria = 15 + (rand() % (COL - 15));
 
         if (mapa[filaAleatoria][colAleatoria] == '.') {
             mapa[filaAleatoria][colAleatoria] = 'K';
