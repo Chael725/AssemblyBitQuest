@@ -6,12 +6,15 @@
 #include <ctype.h>
 #include <time.h>
 #include "mapas.h"
-#include "ventana.h"
 #include "monedasLlave.h"
 #include "enemigos.h"
 #include "canones.h"
+#include "menu.h"
 
 int main() {
+
+    system("mode con: cols=140 lines=55");
+    
     bool llave = false;
     colocar_monedas(mapa1);
     colocar_enemigos(mapa1);
@@ -28,6 +31,10 @@ int main() {
     int playing = 1;
 
     char mira = 'D';
+
+    system("cls");
+
+    menu(input);
 
     system("cls");
     
@@ -113,7 +120,6 @@ int main() {
                 jugadorFila = nuevaFila;
                 jugadorColumna = nuevaColumna;
                 mapa1[jugadorFila][jugadorColumna] = 'P';
-                playing = 0;
             } else if (playing && mapa1[nuevaFila][nuevaColumna] == 'K') {
                 llave = true;
                 mapa1[jugadorFila][jugadorColumna] = '.';
