@@ -10,6 +10,7 @@
 #include "enemigos.h"
 #include "canones.h"
 #include "menu.h"
+extern void contar_entidades(char* mapa, int* c_enemigos, int* c_llaves, int* c_monedas);
 
 int main() {
 
@@ -20,6 +21,16 @@ int main() {
     colocar_enemigos(mapa1);
     colocar_llave(mapa1);
     ocultarCursor();
+
+    int totalEnemigos = 0;
+    int totalLlaves = 0;
+    int totalMonedas = 0;
+
+    contar_entidades((char*)mapa1, &totalEnemigos, &totalLlaves, &totalMonedas);
+
+    printf("Enemigos en el mapa: %d\n", totalEnemigos);
+    printf("Llaves en el mapa: %d\n", totalLlaves);
+    printf("Monedas en el mapa: %d\n", totalMonedas);
 
     system("chcp 437 > nul");
 
