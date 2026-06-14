@@ -66,6 +66,9 @@ void imprimir_ventana(char mapa[FIL][COL +1], int jugadorFila, int jugadorColumn
             }else if(mapa[filInicio + i][colInicio + j] == 'E') {
                 setColor(2);
                 printf("%c", mapa[filInicio + i][colInicio + j]);
+            }else if(mapa[filInicio + i][colInicio + j] == '\''){
+                setColor(2);
+                printf(".", mapa[filInicio + i][colInicio + j]);
             }else {
                 setColor(7);
                 printf("%c", mapa[filInicio + i][colInicio + j]);

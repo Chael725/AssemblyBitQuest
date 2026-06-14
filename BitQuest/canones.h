@@ -6,11 +6,6 @@
 #include <windows.h>
 #include "juego.h"
 
-bool monedaD[FIL] = {false};
-bool llaveD[FIL] = {false};
-
-bool monedaI[FIL] = {false};
-bool llaveI[FIL] = {false};
 
 void generar_proyectiles(char mapa[FIL][COL + 1], int *playing) {
     for (int i = 0; i < FIL; i++) {
@@ -18,27 +13,15 @@ void generar_proyectiles(char mapa[FIL][COL + 1], int *playing) {
             if (mapa[i][j] == '=') {
                 
                 if (j + 1 < COL) {
-                    if (mapa[i][j + 1] == '.') {
+                    if (mapa[i][j + 1] == '\'' || mapa[i][j + 1] == '.') {
                         mapa[i][j + 1] = 'O'; 
-                    } else if (mapa[i][j + 1] == 'M') {
-                        monedaD[i] = true;   
-                        mapa[i][j + 1] = 'O'; 
-                    } else if (mapa[i][j + 1] == 'K') {
-                        llaveD[i] = true;    
-                        mapa[i][j + 1] = 'O'; 
-                    } else if (mapa[i][j + 1] == 'P') {
+                    }else if (mapa[i][j + 1] == 'P') {
                         *playing = 0; return; 
                     }
                 }
 
                 if (j - 1 >= 0) {
-                    if (mapa[i][j - 1] == '.') {
-                        mapa[i][j - 1] = 'I';
-                    } else if (mapa[i][j - 1] == 'M') {
-                        monedaI[i] = true;  
-                        mapa[i][j - 1] = 'I';
-                    } else if (mapa[i][j - 1] == 'K') {
-                        llaveI[i] = true;    
+                    if (mapa[i][j - 1] == '\'' || mapa[i][j - 1] == '.') {
                         mapa[i][j - 1] = 'I';
                     } else if (mapa[i][j - 1] == 'P') {
                         *playing = 0; return;
@@ -64,29 +47,14 @@ void mover_proyectiles(char mapa[FIL][COL + 1], int *playing, int jugadorFila, i
                     mapa[i][j] = '.'; *playing = 0; return;
                 }
 
-                if (monedaD[i]) {
-                    mapa[i][j] = 'M';
-                    monedaD[i] = false;
-                } else if (llaveD[i]) {
-                    mapa[i][j] = 'K';
-                    llaveD[i] = false;
-                } else {
+                
+                if (mapa[sigF][sigC] == '\'' || mapa[sigF][sigC] == '.') {
+                    mapa[sigF][sigC] = 'X'; 
                     mapa[i][j] = '.'; 
-                }
-
-                if (mapa[sigF][sigC] == '.') {
-                    mapa[sigF][sigC] = 'X'; 
-                } else if (mapa[sigF][sigC] == 'M') {
-                    monedaD[i] = true;
-                    mapa[sigF][sigC] = 'X'; 
-                } else if (mapa[sigF][sigC] == 'K') {
-                    llaveD[i] = true;  
-                    mapa[sigF][sigC] = 'X'; 
                 } else if (mapa[sigF][sigC] == '&' || mapa[sigF][sigC] == '#' || mapa[sigF][sigC] == '='){
                     mapa[i][j] = 'v';
                 }
             }
-            
             // Movimiento a la izquierda.
             else if (mapa[i][j] == 'I') {
                 int sigF = i;
@@ -96,24 +64,9 @@ void mover_proyectiles(char mapa[FIL][COL + 1], int *playing, int jugadorFila, i
                     mapa[i][j] = '.'; *playing = 0; return;
                 }
 
-                if (monedaI[i]) {
-                    mapa[i][j] = 'M';
-                    monedaI[i] = false;
-                } else if (llaveI[i]) {
-                    mapa[i][j] = 'K';
-                    llaveI[i] = false;
-                } else {
+                if (mapa[sigF][sigC] == '\'' || mapa[sigF][sigC] == '.') {
+                    mapa[sigF][sigC] = 'Z'; 
                     mapa[i][j] = '.';
-                }
-
-                if (mapa[sigF][sigC] == '.') {
-                    mapa[sigF][sigC] = 'Z'; 
-                } else if (mapa[sigF][sigC] == 'M') {
-                    monedaI[i] = true;
-                    mapa[sigF][sigC] = 'Z'; 
-                } else if (mapa[sigF][sigC] == 'K') {
-                    llaveI[i] = true;
-                    mapa[sigF][sigC] = 'Z'; 
                 } else if (mapa[sigF][sigC] == '&' || mapa[sigF][sigC] == '#' || mapa[sigF][sigC] == '=') {
                     mapa[i][j] = 'v';
                 }
