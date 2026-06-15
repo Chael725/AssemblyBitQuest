@@ -1,6 +1,4 @@
-global contar_entidades
-global validar_movimiento
-global calcular_puntaje
+global contar_entidades, detectar_objeto, contar_celdas_libres
 
 section .text
 
@@ -16,7 +14,7 @@ contar_entidades:
     cmp rax, r10
     jge .fin
 
-    movzx r11, byte [rcx + rax]
+    movzx r11, byte [rcx + rax]  
 
     cmp r11b, '&'
     je .es_enemigo
@@ -47,40 +45,51 @@ contar_entidades:
 .fin:
     ret
 
-validar_movimiento:
-    mov eax, r8d
-    imul eax, edx
-    add eax, r9d
+;Funcion 4: detectar_objeto
+detectar_objeto:
+    xor rax, rax
+    xor r10, r10
+    
+    mov eax, r8d       
+    imul eax, edx       
+    add eax, r9d       
+    
+    mov r10b, byte [rcx + rax] 
+    
 
-    movsxd rax, eax
-
-    movzx r10, byte [rcx + rax]
-
-    cmp r10b, '#'
-    je .bloqueado
-
-.valido:
-    mov eax, 1
+    mov r11b, byte [rsp + 40]  
+    
+    cmp r10b, r11b
+    jne .falso
+    
+.verdadero:
+    mov rax, 1         
+    ret
+    
+.falso:
+    mov rax, 0          
     ret
 
-.bloqueado:
-    mov eax, 0
-    ret
 
-calcular_puntaje:
-    mov eax, ecx
-    imul eax, 100
-
-    mov r10d, r8d
-    imul r10d, 500
-
-    add eax, r10d
-
-    sub eax, edx
-
-    cmp eax, 0
-    jge .fin_puntaje
-    mov eax, 0
-
-.fin_puntaje:
+;Funcion 5: contar_celdas_libres
+contar_celdas_libres:
+    xor rax, rax        
+    xor r8, r8         
+    
+.ciclo_libres:
+    cmp eax, edx        
+    jge .fin_libres
+    
+    mov r9b, byte [rcx + rax]  
+    cmp r9b, '.'               
+    jne .no_es_libre
+    
+    inc r8d             
+    
+.no_es_libre:
+    inc rax           
+    jmp .ciclo_libres
+    
+.fin_libres:
+    mov rax, r8       
     ret
