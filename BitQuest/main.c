@@ -112,10 +112,12 @@ int main() {
         nivelesCompletados = 0;
         puntajeFinal = 0;
 
+     
+
         int nivel = 1;
         int juego_activo = 1;
 
-        while(juego_activo && nivel <= 3) {
+        while(juego_activo && nivel <= 4) {
             char mapa_actual[FIL][COL+1];
 
 
@@ -126,6 +128,8 @@ int main() {
                 mapaCargado = cargar_mapa_desde_archivo("mapa2.txt", mapa_actual);
             } else if (nivel == 3) {
                 mapaCargado = cargar_mapa_desde_archivo("mapa3.txt", mapa_actual);
+            } else if (nivel == 4) {
+                mapaCargado = cargar_mapa_desde_archivo("mapa4.txt", mapa_actual);
             }
 
             if (!mapaCargado) {
@@ -313,6 +317,7 @@ int main() {
                             puntajeFinal = calcular_puntaje(monedasRecogidasTotales, pasosTotales, nivelesCompletados) + puntosKill;
 
                             system("cls");
+                            setColor(7);
                             printf("=========================================\n");
                             printf("Nivel %d completado\n", nivel);
                             printf("Monedas recolectadas: %d / %d\n", monedasRecogidas, totalMonedas);
@@ -338,9 +343,17 @@ int main() {
                                 colocar_monedas(m3_aux);
                                 contar_entidades((char*)m3_aux, &tEn, &tLl, &tMo);
                                 monedasTotalesJuego += tMo;
-                            } else if (nivel > 3) {
-                                puntajeFinal = calcular_puntaje(monedasRecogidasTotales, pasosTotales, nivelesCompletados) + puntosKill;
+                            }else if (nivel == 4) {
+                                int tEn, tLl, tMo;
+                                char m4_aux[FIL][COL+1];
+                                cargar_mapa_desde_archivo("mapa4.txt", m4_aux);
+                                colocar_monedas(m4_aux);
+                                contar_entidades((char*)m4_aux, &tEn, &tLl, &tMo);
+                                monedasTotalesJuego += tMo;
+                            }else if (nivel > 4) {
+                                puntajeFinal = calcular_puntaje(monedasRecogidasTotales, 0, nivelesCompletados) + puntosKill;
                                 system("cls");
+                                setColor(7);
                                 printf("=========================================\n");
                                 printf("Juego completado\n");
                                 printf("Monedas totales recolectadas: %d / %d\n", monedasRecogidasTotales, monedasTotalesJuego);
@@ -375,11 +388,15 @@ int main() {
                 }
             }
 
-            if (juego_activo && nivel <= 3 && !nivel_ganado) {
+            if (juego_activo && nivel <= 4 && !nivel_ganado) {
 
-                puntajeFinal = calcular_puntaje(monedasRecogidasTotales, pasosTotales, nivelesCompletados) + puntosKill;
+                monedasRecogidasTotales -= monedasRecogidas;
+                pasosTotales -= pasos;
+
+                puntajeFinal = calcular_puntaje(monedasRecogidasTotales, 0, nivelesCompletados) + puntosKill;
 
                 system("cls");
+                setColor(7);
                 printf("=========================================\n");
                 printf("               GAME OVER                 \n");
                 printf("=========================================\n");
@@ -390,9 +407,6 @@ int main() {
                 printf("=========================================\n");
                 printf("\nPresiona cualquier tecla para reiniciar el nivel %d...", nivel);
                 _getch();
-
-                monedasRecogidasTotales -= monedasRecogidas;
-                pasosTotales -= pasos;
             }
         }
     }

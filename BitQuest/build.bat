@@ -4,7 +4,7 @@ echo Compilando BitQuest...
 echo =========================================
 
 echo 1. Ensamblando rutinas.asm...
-nasm -f win64 rutinas.asm -o rutinas.obj
+nasm -f win64 rutinas.asm -o rutinas.o  
 if %errorlevel% neq 0 (
     echo [ERROR] Fallo al compilar Ensamblador.
     pause
@@ -12,7 +12,7 @@ if %errorlevel% neq 0 (
 )
 
 echo 2. Compilando y enlazando C...
-gcc main.c juego.c rutinas.obj -o BitQuest.exe
+gcc main.c juego.c musica.c rutinas.o -o BitQuest.exe -static -lwinmm
 if %errorlevel% neq 0 (
     echo [ERROR] Fallo al compilar GCC.
     pause
