@@ -344,7 +344,15 @@ int main() {
                             colocar_monedas(m3_aux);
                             contar_entidades((char*)m3_aux, &tEn, &tLl, &tMo);
                             monedasTotalesJuego += tMo;
-                        } else if (nivel > 3) {
+                        }else if(nivel == 4){
+                            int tEn, tLl, tMo;
+                            char m4_aux[FIL][COL+1];
+                            // Cambiamos copiar_mapa por la lectura del archivo .txt
+                            cargar_mapa_desde_archivo("mapa4.txt", m4_aux);
+                            colocar_monedas(m4_aux);
+                            contar_entidades((char*)m4_aux, &tEn, &tLl, &tMo);
+                            monedasTotalesJuego += tMo;
+                        } else if (nivel > 4) {
                             system("cls");
                             printf("=========================================\n");
                             printf("Juego completado\n");
