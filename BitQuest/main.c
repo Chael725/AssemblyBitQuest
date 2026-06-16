@@ -9,6 +9,8 @@
 #include "enemigos.h"
 #include "canones.h"
 #include "menu.h"
+#include "musica.h"
+
 
 extern void contar_entidades(char* mapa, int* c_enemigos, int* c_llaves, int* c_monedas);
 extern int detectar_objeto(char* mapa, int columnas, int fila, int columna, char objeto);
@@ -53,6 +55,47 @@ int main() {
     system("mode con: cols=140 lines=55");
     system("chcp 437 > nul");
     ocultarCursor();
+
+    // --- VARIABLES DE AUDIO DECLARADAS AL INICIO DEL MAIN ---
+    // Al ponerlas aquí con static, conservan su valor durante todo el ciclo de vida del juego
+    static int volActual = 500; 
+    static bool muteado = false;
+
+    int eleccionMusica = 1; 
+    char enter = 0;
+
+    while (enter != 13) { // 13 es el codigo ASCII de la tecla ENTER.
+
+        reproducir_musica(eleccionMusica); 
+
+        system("cls");
+        printf("=========================================\n");
+        printf("       SELECCIONA LA MUSICA DE FONDO     \n");
+        printf("=========================================\n");
+        
+        // Indicamos cual se selecciono con los **.
+        if (eleccionMusica == 1) printf(" [1] * Cancion Arely *\n");
+        else printf(" [1]   Cancion Arely\n");
+        
+        if (eleccionMusica == 2) printf(" [2] * Cancion Mossbyte Maze *\n");
+        else printf(" [2]   Cancion Mossbyte Maze\n"); 
+        printf("=========================================\n");
+        printf("Presiona [ENTER] para confirmar e iniciar juego.");
+
+        enter = _getch(); 
+        
+        if (enter == '1') { 
+            eleccionMusica = 1;
+            detener_musica();            // Apaga la canción actual.
+            reproducir_musica(eleccionMusica); // Reproduce Cancion Arely.
+        }
+
+        else if (enter == '2') { 
+            eleccionMusica = 2;
+            detener_musica();            // Apaga la canción actual.
+            reproducir_musica(eleccionMusica); // Reproduce Cancion Mossbyte Maze.
+        }
+    }
 
     long int pasosTotales = 0;
     int monedasTotalesJuego = 0;
@@ -148,6 +191,18 @@ int main() {
                 gotoxy(30, 7);
                 printf("Celdas libres: %d   ", celdasLibres);
 
+                gotoxy(30, 9);
+                printf("=======================");
+                gotoxy(30, 10);
+                if (muteado) printf("[M] Musica: MUTEADO    ");
+                else printf("[M] Musica: SONANDO    ");
+                gotoxy(30, 11);
+                printf("[O] Bajar Volumen      ");
+                gotoxy(30, 12);
+                printf("[P] Subir Volumen      ");
+                gotoxy(30, 13);
+                printf("=======================");
+
                 clock_t tiempoActual = clock();
 
                 if ((tiempoActual - movBala) >= 300) { 
@@ -178,6 +233,23 @@ int main() {
                         playing = 0;
                         juego_activo = 0; 
                         break;
+                    }else if (input == 'O') {  
+                        volActual -= 100; 
+                        if (volActual < 0) volActual = 0; 
+                        cambiar_volumen(volActual);
+                    }
+                    else if (input == 'P') { 
+                        volActual += 100; 
+                        if (volActual > 1000) volActual = 1000; 
+                        cambiar_volumen(volActual);
+                    }else if (input == 'M') { 
+                        if (!muteado) {
+                            mutear_musica(); 
+                            muteado = true;
+                        } else {
+                            desmutear_musica(volActual); 
+                            muteado = false;
+                        }
                     }
 
                     else if (input == 'E') {
@@ -320,9 +392,11 @@ int main() {
                 _getch();
                 
                 monedasRecogidasTotales -= monedasRecogidas; 
+                pasosTotales -= pasos;
             }
         }
     }
 
+    detener_musica();
     return 0;
 }
